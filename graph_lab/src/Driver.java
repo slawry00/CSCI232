@@ -43,19 +43,25 @@ public class Driver
             {
                arr.add(line_scanner.nextInt());
             }
-            //System.out.println(v_int); */
             mat.add(arr); // make mat an array of integer arrays
             arr = new ArrayList<Integer>(); //reset v_int
         }    
-        //System.out.println(mat);
         Graph my_graph = new Graph(mat);
+        //BREADTH FIRST TEST ------------------------
+        //my_graph.breadth_first(0);
+        
+        //DEPTH FIRST TEST --------------------------
         //my_graph.depth_first(4); 
-        //depth_first(4, mat);
-        ArrayList vert_arr = my_graph.dijkstra(4);
+        
+        //DIJKASTRA TEST ----------------------------
+        /*ArrayList vert_arr = my_graph.dijkstra(4);
         for (int i = 0; i < vert_arr.size(); i++)
         {
            Vertex my_vert = (Vertex) vert_arr.get(i);
            my_vert.PrintPath();
-        }  
+        }*/
+        
+        //PRIM TEST ---------------------------------
+        //my_graph.prim(0);
     }
 }

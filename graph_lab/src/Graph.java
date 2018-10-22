@@ -33,10 +33,8 @@ public class Graph
        
        v = (Vertex) verts.get(begin);
        q.add(v);
-       //System.out.println(q);
        while (!q.isEmpty())
        {
-           //System.out.println(q);
            v = (Vertex) q.pop();
            v.Visit();
            System.out.print(v + ", ");
@@ -46,7 +44,6 @@ public class Graph
                if (adj_weight != 0)
                {
                    u = (Vertex) verts.get(i);
-                   //System.out.println(u);
                    if (!u.CheckVisited() && !q.contains(u))
                    { //if it is not visited, and not in the q, add it
                        q.add(u);
@@ -60,8 +57,9 @@ public class Graph
    {
       Vertex v = (Vertex) verts.get(begin);
       depth_helper(v);
+      System.out.println();
    }
-   public void depth_helper(Vertex v)
+   private void depth_helper(Vertex v)
    {
       int adj_weight;
       Vertex u;
@@ -80,7 +78,7 @@ public class Graph
             }
          }
       }
-      System.out.println();
+      
    }
    public ArrayList<Vertex> dijkstra(int begin)
    {
@@ -88,32 +86,39 @@ public class Graph
       v = (Vertex) verts.get(begin);
       return dijkstra_helper(v);
    }
-   public ArrayList<Vertex> dijkstra_helper(Vertex v)
+   private ArrayList<Vertex> dijkstra_helper(Vertex v)
    {
       int adj_weight;
-      int cheapest = -1; // initalize it to a flag value 
-      Vertex cheapest_v = v; //initialize it to itself (flag as well)
       Vertex u; // holds the current adjacent Vertex being compared
-
+      Vertex cheapest_v = null; //initialize it to flag value
       v.Visit();
-      //System.out.println("v: " + v);
       for (int i = 0; i < v.GetArr().size(); i++) //check all other verts
       {
          adj_weight = (int) v.GetArr().get(i);
          if (adj_weight != 0) //if it is adjacent
          {
             u = (Vertex) verts.get(i);
-            //System.out.println("u: " + u);
-
             if (u.GetDist() > (v.GetDist() + adj_weight) ||
-                (u.GetDist() == 0 && !u.CheckVisited())) 
+                (u.GetDist() == 0 && !u.CheckVisited()))
             { //update adjacent member's dist & path
                u.SetDist(v.GetDist() + adj_weight);
-               //System.out.println(u + ": " + u.GetDist() + " new path: " + v);
                u.SetPath(v);
             }
          }
       }
+      
+      cheapest_v = find_cheapest_v();
+      if (cheapest_v != null) // if there exists a cheapest unknown vertex
+         {
+           dijkstra_helper(cheapest_v); //move to the cheapest unknown v
+         }
+      return verts;
+   }
+   private Vertex find_cheapest_v()
+   {
+      Vertex u;
+      int cheapest = -1; // initalize it to a flag value 
+      Vertex cheapest_v = null; // also a flag
       for (int i = 0; i < verts.size(); i++)
       {
          u = (Vertex) verts.get(i);
@@ -131,13 +136,46 @@ public class Graph
            }
          }
       }
-
-      if (cheapest_v != v) // using flag to see if there isnt an unknown
-         {                    // cheapest vertex (aka cheapest_v never updated)
-           //System.out.println("Cheapest_v: " + cheapest_v);
-           //System.out.println("moving to cheapest vertex");
-           dijkstra_helper(cheapest_v); //recurse into the cheapest v
+      return cheapest_v;
+   }
+   public void prim(int begin)
+   {
+      Vertex v; // holds the vertex we're currently visiting
+      v = (Vertex) verts.get(begin);
+      System.out.println("Minimum Spanning Tree Edges: ");
+      prim_helper(v, 0);
+   }
+   private void prim_helper(Vertex v, int total_weight)
+   {
+      int adj_weight;
+      Vertex u; // holds the current adjacent Vertex being compared
+      Vertex cheapest_v = null; //initialize it to flag value
+      v.Visit();
+      for (int i = 0; i < v.GetArr().size(); i++) //check all other verts
+      {
+         adj_weight = (int) v.GetArr().get(i);
+         if (adj_weight != 0) //if it is adjacent
+         {
+            u = (Vertex) verts.get(i);
+            if (u.GetDist() > (adj_weight) ||
+                (u.GetDist() == 0 && !u.CheckVisited()))
+            { //update adjacent member's dist & path
+               u.SetDist(adj_weight);
+               u.SetPath(v);
+            }
          }
-      return verts;
+      }
+      cheapest_v = find_cheapest_v();
+      if (cheapest_v != null) // if there exists a cheapest unknown vertex
+         {
+           System.out.println("(" + cheapest_v.GetPath() + "," + 
+                                    cheapest_v + ")"); //edge in spanning tree
+           prim_helper(cheapest_v, total_weight + cheapest_v.GetDist()); 
+            //move to the cheapest unknown v & pass the current weight
+         }
+      else
+      {
+         System.out.println("Total Weight: " + total_weight);
+      }
    }
 }
