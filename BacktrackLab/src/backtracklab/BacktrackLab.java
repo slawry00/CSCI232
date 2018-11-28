@@ -14,7 +14,7 @@ public class BacktrackLab
 {
     public static void main(String[] args) 
     {
-        MagicSquare my_square = new MagicSquare(3);
+        MagicSquare my_square = new MagicSquare(5);
         my_square.solve();
         //my_square.print_solution();
     } 
