@@ -18,7 +18,7 @@ public class WeightMatrix
    private int num_w; // number of students
    private int tot_w; //total weight of all students
    private int rest; // weight of remaining students for solve()
-   private int count = 0;
+   //private int count = 0;
    
    private ArrayList<Integer> c_left; //holds current left/right
    private ArrayList<Integer> c_right;
@@ -64,7 +64,7 @@ public class WeightMatrix
    }
    public void solve(int left, int ind)
    {
-      count++;
+      //count++;
       lookup[left][ind] = 1; // save that we've done this solve(left,ind) before
       rest = tot_w - left; // the remaining weight
       if (abs(left - rest) < diff) //if it's a new best
@@ -72,7 +72,7 @@ public class WeightMatrix
          diff = abs(left - rest);
          d_left = (ArrayList) c_left.clone();
          d_right = (ArrayList) c_right.clone();
-         // update diff and c_left, c_right
+         // update diff and d_left, d_right
       }
       int i = 1;
       while (ind + i < num_w)
@@ -103,6 +103,6 @@ public class WeightMatrix
       }
       out.println();
       out.println("The weight difference is " + diff);
-      System.out.println("count is: " + count);
+      //System.out.println("count is: " + count);
    }
 }
