@@ -35,7 +35,7 @@ public class DrawPanel extends JPanel
            grid = (BufferedImage)(this.createImage(w,h));
            gc = grid.createGraphics();
         }
-        g2.drawImage(grid, 0, 0, null);
+        g2.drawImage(grid, null, 0, 0);
     }
     public void drawLine(int start_x, int start_y, int end_x, int end_y)
     {
