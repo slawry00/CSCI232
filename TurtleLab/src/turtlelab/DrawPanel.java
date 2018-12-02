@@ -5,6 +5,7 @@
  */
 package turtlelab;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -43,7 +44,9 @@ public class DrawPanel extends JPanel
         {
             public void run()
             {
+                gc.setColor(Color.red);
                 gc.drawLine(start_x, start_y, end_x, end_y);
+                repaint();
             }
         };     
         SwingUtilities.invokeLater(do_stuff);
